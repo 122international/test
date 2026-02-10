@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire - Forme & Bien-être</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: white;
+            color: #333;
+            line-height: 1.3;
+            font-size: 10px;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #4a90e2 0%, #2c3e50 100%);
+            color: white;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .logo-container img {
+            max-height: 60px;
+            width: auto;
+            display: inline-block;
+        }
+        
+        .header h1 {
+            margin: 0 0 6px 0;
+            font-size: 16px;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 6px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        
+        .personal-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .form-group {
+            margin-bottom: 8px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 9px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        
+        textarea {
+            height: 60px;
+            resize: vertical;
+        }
+        
+        .category-title {
+            background-color: #e8f4f8;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin: 12px 0 8px 0;
+            font-weight: 600;
+            color: #2c3e50;
+            border-left: 3px solid #4a90e2;
+            font-size: 10px;
+        }
+        
+        /* Version Desktop - Grille compacte */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto auto auto;
+            gap: 4px;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 9px;
+        }
+        
+        .compact-header {
+            font-weight: 600;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 8px;
+            text-align: center;
+        }
+        
+        .compact-question {
+            text-align: left;
+            padding: 4px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 9px;
+            line-height: 1.2;
+        }
+        
+        .compact-option {
+            text-align: center;
+            padding: 3px 1px;
+        }
+        
+        .compact-option input {
+            margin: 0;
+            transform: scale(0.8);
+        }
+        
+        .question-number {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            margin-right: 5px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+        
+        /* Version Mobile - Liste verticale */
+        .mobile-question {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            display: none;
+        }
+        
+        .mobile-question-text {
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+        
+        .mobile-options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+        
+        .mobile-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .mobile-option-label {
+            font-size: 10px;
+            color: #666;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        .mobile-option input {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+        
+        .instructions {
+            font-style: italic;
+            color: #666;
+            font-size: 8px;
+            margin-bottom: 8px;
+            padding: 5px;
+            background-color: #f8f9fa;
+            border-radius: 3px;
+        }
+        
+        .radio-group-horizontal {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .radio-option-horizontal {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option-horizontal input {
+            margin-right: 3px;
+            transform: scale(0.8);
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 3px;
+            margin-top: 5px;
+            font-size: 8px;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-option input {
+            margin-right: 3px;
+            transform: scale(0.8);
+        }
+        
+        /* NOUVEAU STYLE POUR LES CHAMPS "AUTRE" */
+        .other-option-container {
+            display: contents;
+        }
+        
+        .other-input-fullwidth {
+            grid-column: 1 / -1;
+            width: 100%;
+            margin-top: 5px;
+            display: none;
+            font-size: 9px;
+            padding: 6px 8px;
+            border: 1px solid #4a90e2;
+            border-radius: 3px;
+            background-color: #f8f9fa;
+            resize: vertical;
+            min-height: 32px;
+        }
+        
+        .other-input-fullwidth.visible {
+            display: block;
+        }
+        
+        .form-group-compact {
+            margin-bottom: 6px;
+        }
+        
+        .form-group-compact label {
+            font-size: 9px;
+            margin-bottom: 2px;
+        }
+        
+        .compact-header:first-child {
+            text-align: left;
+        }
+        
+        /* Niveaux de score */
+        .level-excellent {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .level-good {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        
+        .level-important {
+            color: #fd7e14;
+            font-weight: bold;
+        }
+        
+        .level-exceptional {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .level-message {
+            font-size: 9px;
+            margin: 3px 0;
+            text-align: center;
+            padding: 2px;
+            border-radius: 3px;
+        }
+
+        /* Résultats et scores */
+        .results-section {
+            background-color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+        }
+        
+        .results-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 6px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .score-item {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #eaeaea;
+        }
+        
+        .score-label {
+            font-weight: bold;
+            font-size: 9px;
+            color: #2c3e50;
+        }
+        
+        .score-value {
+            font-size: 11px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .total-score {
+            grid-column: 1 / -1;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #4a90e2;
+            background-color: #e8f4f8;
+        }
+        
+        .total-score .score-value {
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        
+        .score-percentage {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .category-name {
+            font-weight: bold;
+            font-size: 10px;
+            margin-bottom: 3px;
+            color: #2c3e50;
+        }
+        
+        .rank-number {
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a90e2;
+            margin: 2px 0;
+        }
+        
+        .improvement-analysis {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .improvement-analysis h4 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        
+        .improvement-text {
+            font-size: 9px;
+            line-height: 1.4;
+            color: #555;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 3px solid #ffd700;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+        
+        /* Téléchargement */
+        .download-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #4a90e2 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Notes */
+        .notes-section {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+        
+        .notes-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            font-size: 10px;
+        }
+
+        /* Graphiques */
+        .score-visualization {
+            margin: 15px 0;
+        }
+
+        .score-bar-container {
+            margin-bottom: 12px;
+        }
+
+        .score-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            margin-bottom: 3px;
+            color: #2c3e50;
+        }
+
+        .score-bar {
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #2c3e50);
+            border-radius: 10px 0 0 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .score-bar-marker {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #ff6b6b;
+        }
+
+        .score-bar-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 8px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .visualization-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .improvement-margin {
+            background: #e8f4f8;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .improvement-margin .value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        /* CLASSE POUR MASQUER LA SECTION MÉNOPAUSE */
+        .hidden-section {
+            display: none;
+        }
+
+        /* STYLES POUR L'IMPRESSION PDF - CORRIGÉS */
+        @media print {
+            body {
+                padding: 8px;
+                background: white;
+            }
+            .header {
+                background: #2c3e50 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .section {
+                border: 1px solid #ccc;
+                box-shadow: none;
+            }
+            .compact-option input {
+                -webkit-print-color-adjust: exact;
+            }
+            .results-section {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .download-section {
+                display: none;
+            }
+            .improvement-analysis {
+                background-color: #f0f8ff !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .highlight {
+                background-color: #fffacd !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .notes-section {
+                background-color: #f9f9f9 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .score-bar-fill {
+                background: #2c3e50 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .mobile-question {
+                display: none !important;
+            }
+            .compact-grid {
+                display: grid !important;
+            }
+            .other-input-fullwidth {
+                background-color: #f8f9fa !important;
+                -webkit-print-color-adjust: exact;
+            }
+            body::before {
+                opacity: 0.03;
+                background-size: 50%;
+            }
+            
+            /* Masquer la section ménopause à l'impression si elle est cachée */
+            .hidden-section {
+                display: none !important;
+            }
+            
+            /* CORRECTION : MASQUER LES PLACEHOLDERS À L'IMPRESSION */
+            textarea::placeholder,
+            input::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+            
+            /* S'assurer que le texte saisi est bien visible */
+            textarea,
+            input {
+                color: #000 !important;
+                background-color: white !important;
+            }
+            
+            /* CORRECTION CRITIQUE : AFFICHAGE DES RÉPONSES COCHÉES EN IMPRESSION */
+            .compact-option input[type="radio"],
+            .mobile-option input[type="radio"],
+            .radio-option-horizontal input[type="radio"],
+            .checkbox-option input[type="checkbox"] {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 14px;
+                height: 14px;
+                border: 1px solid #999;
+                border-radius: 2px;
+                display: inline-block;
+                position: relative;
+                background: white;
+            }
+            
+            input[type="radio"]:checked,
+            input[type="checkbox"]:checked {
+                background-color: #f8f9fa;
+                border-color: #2c3e50;
+            }
+            
+            input[type="radio"]:checked::after,
+            input[type="checkbox"]:checked::after {
+                content: "●";
+                display: block;
+                text-align: center;
+                font-weight: bold;
+                color: #2c3e50;
+                font-size: 12px;
+                line-height: 12px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+            }
+            
+            /* S'assurer que tout est visible */
+            .compact-grid {
+                border: 1px solid #eee;
+            }
+            
+            .compact-question {
+                border-bottom: 1px solid #eee !important;
+            }
+        }
+
+        /* Responsive MOBILE */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .header {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .logo-container img {
+                max-height: 50px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            .section {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+            
+            .personal-info-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            label {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="number"],
+            select,
+            textarea {
+                padding: 12px;
+                font-size: 16px;
+                border-radius: 6px;
+            }
+            
+            textarea {
+                height: 80px;
+            }
+            
+            .category-title {
+                font-size: 16px;
+                padding: 12px;
+                margin: 20px 0 12px 0;
+            }
+            
+            /* Masquer desktop, afficher mobile */
+            .compact-grid {
+                display: none;
+            }
+            
+            .mobile-question {
+                display: block;
+            }
+            
+            .mobile-question-text {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+            
+            .mobile-options-grid {
+                gap: 12px;
+            }
+            
+            .mobile-option-label {
+                font-size: 12px;
+            }
+            
+            .mobile-option input {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .instructions {
+                font-size: 12px;
+                padding: 10px;
+                margin-bottom: 16px;
+            }
+            
+            .radio-group-horizontal {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .radio-option-horizontal {
+                font-size: 14px;
+            }
+            
+            .radio-option-horizontal input {
+                transform: scale(1.2);
+                margin-right: 8px;
+            }
+            
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .checkbox-option {
+                font-size: 14px;
+            }
+            
+            .checkbox-option input {
+                transform: scale(1.2);
+                margin-right: 8px;
+            }
+            
+            .other-input-fullwidth {
+                font-size: 14px;
+                padding: 10px;
+                min-height: 44px;
+                margin-top: 8px;
+            }
+            
+            .form-group-compact label {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .score-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .score-item {
+                padding: 16px;
+            }
+            
+            .score-label {
+                font-size: 14px;
+            }
+            
+            .score-value {
+                font-size: 16px;
+            }
+            
+            .category-name {
+                font-size: 14px;
+            }
+            
+            .rank-number {
+                font-size: 16px;
+            }
+            
+            .score-percentage {
+                font-size: 12px;
+            }
+            
+            .level-message {
+                font-size: 12px;
+                padding: 6px;
+            }
+            
+            .improvement-analysis h4 {
+                font-size: 16px;
+            }
+            
+            .improvement-text {
+                font-size: 14px;
+            }
+            
+            .highlight {
+                font-size: 14px;
+                padding: 12px;
+            }
+            
+            .download-btn {
+                padding: 16px 32px;
+                font-size: 16px;
+            }
+            
+            body::before {
+                background-size: 80%;
+                opacity: 0.05;
+            }
+        }
+        
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            body {
+                padding: 15px;
+            }
+            
+            .mobile-question {
+                display: none;
+            }
+            
+            .compact-grid {
+                display: grid;
+            }
+        }
+        
+        /* Desktop */
+        @media (min-width: 1025px) {
+            .mobile-question {
+                display: none;
+            }
+            
+            .compact-grid {
+                display: grid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="">
+        </div>
+        <h1>Questionnaire - Forme & Bien-être</h1>
+        <p>Évaluez votre niveau de forme et de bien-être</p>
+    </div>
+    
+    <div class="section">
+        <h2 class="section-title">Informations personnelles</h2>
+        <div class="personal-info-grid">
+            <div class="form-group">
+                <label for="name">Nom + Prénom :</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Adresse e-mail :</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Âge :</label>
+                <input type="number" id="age" name="age" min="1" max="120" required>
+            </div>
+            <div class="form-group">
+                <label>Sexe :</label>
+                <div class="radio-group-horizontal">
+                    <div class="radio-option-horizontal">
+                        <input type="radio" id="sex-f" name="sex" value="F">
+                        <label for="sex-f">Femme</label>
+                    </div>
+                    <div class="radio-option-horizontal">
+                        <input type="radio" id="sex-h" name="sex" value="H">
+                        <label for="sex-h">Homme</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Téléphone WhatsApp :</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="job">Métier exercé :</label>
+            <input type="text" id="job" name="job" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Auto-évaluation Forme & Bien-être</h2>
+        <p class="instructions">Pour chaque affirmation, choisissez la fréquence qui correspond le mieux à votre situation.</p>
+        
+        <div class="category-title">A. Forme et santé globale</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">1</span>
+                J'ai du mal à maintenir un poids santé.
+            </div>
+            <div class="compact-option"><input type="radio" name="q1" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q1" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q1" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q1" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q1" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">2</span>
+                Je ne sais pas si je mange correctement pour atteindre mon plein potentiel.
+            </div>
+            <div class="compact-option"><input type="radio" name="q2" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q2" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q2" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q2" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q2" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">3</span>
+                Je me sens léthargique ou fatigué.
+            </div>
+            <div class="compact-option"><input type="radio" name="q3" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q3" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q3" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q3" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q3" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">4</span>
+                J'ai les mains/pieds gonflés et jambes lourdes.
+            </div>
+            <div class="compact-option"><input type="radio" name="q4" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q4" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q4" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q4" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q4" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">1</span>
+                J'ai du mal à maintenir un poids santé.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q1" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q1" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q1" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q1" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q1" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">2</span>
+                Je ne sais pas si je mange correctement pour atteindre mon plein potentiel.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q2" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q2" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q2" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q2" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q2" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">3</span>
+                Je me sens léthargique ou fatigué.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q3" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q3" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q3" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q3" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q3" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">4</span>
+                J'ai les mains/pieds gonflés et jambes lourdes.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q4" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q4" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q4" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q4" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q4" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-title">B. Équilibre intérieur et performances cognitives</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">5</span>
+                Je n'ai pas de routine de sommeil régulière.
+            </div>
+            <div class="compact-option"><input type="radio" name="q5" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q5" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q5" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q5" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q5" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">6</span>
+                J'ai du mal à me concentrer ou à me motiver.
+            </div>
+            <div class="compact-option"><input type="radio" name="q6" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q6" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q6" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q6" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q6" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">7</span>
+                Je me sens stressé ou anxieux.
+            </div>
+            <div class="compact-option"><input type="radio" name="q7" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q7" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q7" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q7" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q7" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">5</span>
+                Je n'ai pas de routine de sommeil régulière.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q5" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q5" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q5" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q5" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q5" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">6</span>
+                J'ai du mal à me concentrer ou à me motiver.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q6" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q6" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q6" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q6" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q6" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">7</span>
+                Je me sens stressé ou anxieux.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q7" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q7" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q7" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q7" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q7" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-title">C. Système digestif</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">8</span>
+                Je ressens des ballonnements, gaz ou maux d'estomac.
+            </div>
+            <div class="compact-option"><input type="radio" name="q8" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q8" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q8" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q8" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q8" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">9</span>
+                Mon transit est irrégulier (constipation ou diarrhée).
+            </div>
+            <div class="compact-option"><input type="radio" name="q9" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q9" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q9" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q9" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q9" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">8</span>
+                Je ressens des ballonnements, gaz ou maux d'estomac.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q8" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q8" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q8" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q8" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q8" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">9</span>
+                Mon transit est irrégulier (constipation ou diarrhée).
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q9" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q9" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q9" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q9" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q9" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-title">D. Système immunitaire</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">10</span>
+                Je me sens épuisé, malade ou je mets beaucoup de temps à récupérer.
+            </div>
+            <div class="compact-option"><input type="radio" name="q10" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q10" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q10" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q10" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q10" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">11</span>
+                Je ressens des symptômes saisonniers (allergies, rhumes).
+            </div>
+            <div class="compact-option"><input type="radio" name="q11" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q11" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q11" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q11" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q11" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">12</span>
+                Je souffre de perte de cheveux et de douleurs musculaires.
+            </div>
+            <div class="compact-option"><input type="radio" name="q12" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q12" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q12" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q12" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q12" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">10</span>
+                Je me sens épuisé, malade ou je mets beaucoup de temps à récupérer.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q10" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q10" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q10" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q10" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q10" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">11</span>
+                Je ressens des symptômes saisonniers (allergies, rhumes).
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q11" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q11" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q11" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q11" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q11" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">12</span>
+                Je souffre de perte de cheveux et de douleurs musculaires.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q12" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q12" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q12" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q12" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q12" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-title">E. Beauté intégrale</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">13</span>
+                Ma peau est sèche, déshydratée ou terne.
+            </div>
+            <div class="compact-option"><input type="radio" name="q13" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q13" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q13" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q13" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q13" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">14</span>
+                Mes cheveux/ongles sont cassants, secs.
+            </div>
+            <div class="compact-option"><input type="radio" name="q14" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q14" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q14" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q14" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q14" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">15</span>
+                Je me couche sans nettoyer mon visage.
+            </div>
+            <div class="compact-option"><input type="radio" name="q15" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q15" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q15" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q15" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q15" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">13</span>
+                Ma peau est sèche, déshydratée ou terne.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q13" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q13" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q13" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q13" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q13" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">14</span>
+                Mes cheveux/ongles sont cassants, secs.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q14" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q14" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q14" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q14" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q14" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">15</span>
+                Je me couche sans nettoyer mon visage.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q15" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q15" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q15" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q15" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q15" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-title">F. Soutien de la santé osseuse et des articulations</div>
+        
+        <div class="compact-grid">
+            <div class="compact-header">Question</div>
+            <div class="compact-header">Jamais</div>
+            <div class="compact-header">Rarement</div>
+            <div class="compact-header">Parfois</div>
+            <div class="compact-header">Souvent</div>
+            <div class="compact-header">Toujours</div>
+            
+            <div class="compact-question">
+                <span class="question-number">16</span>
+                Je me sens moins stable ou j'ai moins d'équilibre.
+            </div>
+            <div class="compact-option"><input type="radio" name="q16" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q16" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q16" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q16" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q16" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">17</span>
+                J'ai l'impression que mon corps a besoin de plus de soutien.
+            </div>
+            <div class="compact-option"><input type="radio" name="q17" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q17" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q17" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q17" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q17" value="1"></div>
+            
+            <div class="compact-question">
+                <span class="question-number">18</span>
+                Je remarque des changements dans ma façon de bouger.
+            </div>
+            <div class="compact-option"><input type="radio" name="q18" value="5"></div>
+            <div class="compact-option"><input type="radio" name="q18" value="4"></div>
+            <div class="compact-option"><input type="radio" name="q18" value="3"></div>
+            <div class="compact-option"><input type="radio" name="q18" value="2"></div>
+            <div class="compact-option"><input type="radio" name="q18" value="1"></div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">16</span>
+                Je me sens moins stable ou j'ai moins d'équilibre.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q16" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q16" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q16" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q16" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q16" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">17</span>
+                J'ai l'impression que mon corps a besoin de plus de soutien.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q17" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q17" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q17" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q17" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q17" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-question">
+            <div class="mobile-question-text">
+                <span class="question-number">18</span>
+                Je remarque des changements dans ma façon de bouger.
+            </div>
+            <div class="mobile-options-grid">
+                <div class="mobile-option">
+                    <input type="radio" name="q18" value="5">
+                    <div class="mobile-option-label">Jamais</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q18" value="4">
+                    <div class="mobile-option-label">Rarement</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q18" value="3">
+                    <div class="mobile-option-label">Parfois</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q18" value="2">
+                    <div class="mobile-option-label">Souvent</div>
+                </div>
+                <div class="mobile-option">
+                    <input type="radio" name="q18" value="1">
+                    <div class="mobile-option-label">Toujours</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="menopause-section" class="hidden-section">
+            <div class="category-title">G. Soutien pendant la pré/post-ménopause</div>
+            
+            <div class="compact-grid">
+                <div class="compact-header">Question</div>
+                <div class="compact-header">Jamais</div>
+                <div class="compact-header">Rarement</div>
+                <div class="compact-header">Parfois</div>
+                <div class="compact-header">Souvent</div>
+                <div class="compact-header">Toujours</div>
+                
+                <div class="compact-question">
+                    <span class="question-number">19</span>
+                    À quelle fréquence vos nuits sont-elles perturbées par des réveils soudains ou des sueurs nocturnes ?
+                </div>
+                <div class="compact-option"><input type="radio" name="q19" value="5"></div>
+                <div class="compact-option"><input type="radio" name="q19" value="4"></div>
+                <div class="compact-option"><input type="radio" name="q19" value="3"></div>
+                <div class="compact-option"><input type="radio" name="q19" value="2"></div>
+                <div class="compact-option"><input type="radio" name="q19" value="1"></div>
+                
+                <div class="compact-question">
+                    <span class="question-number">20</span>
+                    À quelle fréquence êtes-vous gênée par des bouffées de chaleur soudaines en public ?
+                </div>
+                <div class="compact-option"><input type="radio" name="q20" value="5"></div>
+                <div class="compact-option"><input type="radio" name="q20" value="4"></div>
+                <div class="compact-option"><input type="radio" name="q20" value="3"></div>
+                <div class="compact-option"><input type="radio" name="q20" value="2"></div>
+                <div class="compact-option"><input type="radio" name="q20" value="1"></div>
+                
+                <div class="compact-question">
+                    <span class="question-number">21</span>
+                    Les changements récents de votre silhouette ou de votre poids affectent-ils votre confiance en vous ?
+                </div>
+                <div class="compact-option"><input type="radio" name="q21" value="5"></div>
+                <div class="compact-option"><input type="radio" name="q21" value="4"></div>
+                <div class="compact-option"><input type="radio" name="q21" value="3"></div>
+                <div class="compact-option"><input type="radio" name="q21" value="2"></div>
+                <div class="compact-option"><input type="radio" name="q21" value="1"></div>
+                
+                <div class="compact-question">
+                    <span class="question-number">22</span>
+                    Dans quelle mesure la baisse de désir ou l'inconfort intime affectent-ils votre épanouissement personnel ou votre vie de couple ?
+                </div>
+                <div class="compact-option"><input type="radio" name="q22" value="5"></div>
+                <div class="compact-option"><input type="radio" name="q22" value="4"></div>
+                <div class="compact-option"><input type="radio" name="q22" value="3"></div>
+                <div class="compact-option"><input type="radio" name="q22" value="2"></div>
+                <div class="compact-option"><input type="radio" name="q22" value="1"></div>
+            </div>
+            
+            <div class="mobile-question">
+                <div class="mobile-question-text">
+                    <span class="question-number">19</span>
+                    À quelle fréquence vos nuits sont-elles perturbées par des réveils soudains ou des sueurs nocturnes ?
+                </div>
+                <div class="mobile-options-grid">
+                    <div class="mobile-option">
+                        <input type="radio" name="q19" value="5">
+                        <div class="mobile-option-label">Jamais</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q19" value="4">
+                        <div class="mobile-option-label">Rarement</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q19" value="3">
+                        <div class="mobile-option-label">Parfois</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q19" value="2">
+                        <div class="mobile-option-label">Souvent</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q19" value="1">
+                        <div class="mobile-option-label">Toujours</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-question">
+                <div class="mobile-question-text">
+                    <span class="question-number">20</span>
+                    À quelle fréquence êtes-vous gênée par des bouffées de chaleur soudaines en public ?
+                </div>
+                <div class="mobile-options-grid">
+                    <div class="mobile-option">
+                        <input type="radio" name="q20" value="5">
+                        <div class="mobile-option-label">Jamais</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q20" value="4">
+                        <div class="mobile-option-label">Rarement</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q20" value="3">
+                        <div class="mobile-option-label">Parfois</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q20" value="2">
+                        <div class="mobile-option-label">Souvent</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q20" value="1">
+                        <div class="mobile-option-label">Toujours</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-question">
+                <div class="mobile-question-text">
+                    <span class="question-number">21</span>
+                    Les changements récents de votre silhouette ou de votre poids affectent-ils votre confiance en vous ?
+                </div>
+                <div class="mobile-options-grid">
+                    <div class="mobile-option">
+                        <input type="radio" name="q21" value="5">
+                        <div class="mobile-option-label">Jamais</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q21" value="4">
+                        <div class="mobile-option-label">Rarement</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q21" value="3">
+                        <div class="mobile-option-label">Parfois</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q21" value="2">
+                        <div class="mobile-option-label">Souvent</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q21" value="1">
+                        <div class="mobile-option-label">Toujours</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-question">
+                <div class="mobile-question-text">
+                    <span class="question-number">22</span>
+                    Dans quelle mesure la baisse de désir ou l'inconfort intime affectent-ils votre épanouissement personnel ou votre vie de couple ?
+                </div>
+                <div class="mobile-options-grid">
+                    <div class="mobile-option">
+                        <input type="radio" name="q22" value="5">
+                        <div class="mobile-option-label">Jamais</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q22" value="4">
+                        <div class="mobile-option-label">Rarement</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q22" value="3">
+                        <div class="mobile-option-label">Parfois</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q22" value="2">
+                        <div class="mobile-option-label">Souvent</div>
+                    </div>
+                    <div class="mobile-option">
+                        <input type="radio" name="q22" value="1">
+                        <div class="mobile-option-label">Toujours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Vos Habitudes de Consommation</h2>
+        
+        <div class="form-group-compact">
+            <label>23. Quelle importance accordez-vous à votre forme et bien-être ?</label>
+            <div class="radio-group-horizontal">
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="importance-1" name="importance" value="very">
+                    <label for="importance-1">Très grande importance</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="importance-2" name="importance" value="important">
+                    <label for="importance-2">Importante</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="importance-3" name="importance" value="moderate">
+                    <label for="importance-3">Modérée</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>24. Comment savez-vous que votre corps reçoit tous les nutriments dont il a besoin ?</label>
+            <div class="radio-group-horizontal">
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="nutrients-1" name="nutrients" value="dont-know">
+                    <label for="nutrients-1">Je ne sais pas</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="nutrients-2" name="nutrients" value="healthy-eating">
+                    <label for="nutrients-2">Je mange sainement</label>
+                </div>
+                <div class="other-option-container">
+                    <div class="radio-option-horizontal">
+                        <input type="radio" id="nutrients-3" name="nutrients" value="other">
+                        <label for="nutrients-3">Autre :</label>
+                    </div>
+                    <textarea class="other-input-fullwidth" id="nutrients-other" name="nutrients-other" placeholder="Précisez votre réponse..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>25. Utilisez-vous des compléments nutritionnels ?</label>
+            <div class="radio-group-horizontal">
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="supplements-1" name="supplements" value="yes">
+                    <label for="supplements-1">Oui</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="supplements-2" name="supplements" value="occasionally">
+                    <label for="supplements-2">Occasionnellement</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="supplements-3" name="supplements" value="no">
+                    <label for="supplements-3">Non</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>26. Si OUI, pour quelles raisons ? (plusieurs réponses possibles)</label>
+            <div class="checkbox-grid">
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-1" name="reasons" value="energy">
+                    <label for="reason-1">Énergie & vitalité</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-2" name="reasons" value="immunity">
+                    <label for="reason-2">Soutien immunitaire</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-3" name="reasons" value="digestion">
+                    <label for="reason-3">Digestion & confort</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-4" name="reasons" value="skin">
+                    <label for="reason-4">Peau, cheveux, ongles</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-5" name="reasons" value="joints">
+                    <label for="reason-5">Mobilité articulaire</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-6" name="reasons" value="sports">
+                    <label for="reason-6">Performance sportive</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="reason-7" name="reasons" value="wellbeing">
+                    <label for="reason-7">Bien-être général</label>
+                </div>
+                <div class="other-option-container">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="reason-8" name="reasons" value="other">
+                        <label for="reason-8">Autre :</label>
+                    </div>
+                    <textarea class="other-input-fullwidth" id="reasons-other" name="reasons-other" placeholder="Précisez votre réponse..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>27. Quels types de produits utilisez-vous ?</label>
+            <div class="checkbox-grid">
+                <div class="checkbox-option">
+                    <input type="checkbox" id="product-1" name="products" value="multivitamins">
+                    <label for="product-1">Multivitamines</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="product-2" name="products" value="magnesium">
+                    <label for="product-2">Magnésium/Calcium</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="product-3" name="products" value="omega3">
+                    <label for="product-3">Oméga 3</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="product-4" name="products" value="probiotics">
+                    <label for="product-4">Probiotiques</label>
+                </div>
+                <div class="other-option-container">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="product-5" name="products" value="other">
+                        <label for="product-5">Autre :</label>
+                    </div>
+                    <textarea class="other-input-fullwidth" id="products-other" name="products-other" placeholder="Précisez votre réponse..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>28. Où achetez-vous vos produits ?</label>
+            <div class="checkbox-grid">
+                <div class="checkbox-option">
+                    <input type="checkbox" id="place-1" name="places" value="pharmacy">
+                    <label for="place-1">Pharmacie</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="place-2" name="places" value="parapharmacy">
+                    <label for="place-2">Parapharmacie</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="place-3" name="places" value="online">
+                    <label for="place-3">En ligne</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="place-4" name="places" value="friend">
+                    <label for="place-4">Recommandation ami/conseiller</label>
+                </div>
+                <div class="other-option-container">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="place-5" name="places" value="other">
+                        <label for="place-5">Autre :</label>
+                    </div>
+                    <textarea class="other-input-fullwidth" id="places-other" name="places-other" placeholder="Précisez votre réponse..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>29. Budget mensuel pour votre FOYER - Compléments nutritionnels :</label>
+            <div class="radio-group-horizontal">
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-supplements-1" name="budget-supplements" value="less50">
+                    <label for="budget-supplements-1">Moins de 50€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-supplements-2" name="budget-supplements" value="50-150">
+                    <label for="budget-supplements-2">50-150€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-supplements-3" name="budget-supplements" value="150-300">
+                    <label for="budget-supplements-3">150-300€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-supplements-4" name="budget-supplements" value="more300">
+                    <label for="budget-supplements-4">Plus de 300€</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group-compact">
+            <label>30. Budget mensuel pour votre FOYER - Soins de la peau :</label>
+            <div class="radio-group-horizontal">
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-skin-1" name="budget-skin" value="less50">
+                    <label for="budget-skin-1">Moins de 50€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-skin-2" name="budget-skin" value="50-150">
+                    <label for="budget-skin-2">50-150€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-skin-3" name="budget-skin" value="150-300">
+                    <label for="budget-skin-3">150-300€</label>
+                </div>
+                <div class="radio-option-horizontal">
+                    <input type="radio" id="budget-skin-4" name="budget-skin" value="more300">
+                    <label for="budget-skin-4">Plus de 300€</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-compact">
+            <label for="obstacles">31. Qu'est-ce qui vous empêche de prendre soin de votre forme et bien-être ?</label>
+            <textarea id="obstacles" name="obstacles" placeholder="Manque de temps, budget, connaissances..."></textarea>
+        </div>
+        
+        <div class="notes-section">
+            <div class="notes-title">Notes personnelles</div>
+            <textarea id="notes" name="notes" placeholder="Ajoutez ici toute information supplémentaire que vous souhaitez partager..."></textarea>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <h2 class="results-title">Résultats de votre auto-évaluation</h2>
+        
+        <div class="instructions">
+            Les scores ci-dessous reflètent votre niveau actuel de bien-être. Plus le pourcentage est élevé, 
+            plus votre bien-être est optimal dans cette catégorie.
+        </div>
+        
+        <div class="score-visualization">
+            <div class="visualization-title">Votre niveau global de bien-être</div>
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Niveau actuel de bien-être</span>
+                    <span id="current-score-value">0%</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill" id="score-bar-fill" style="width: 0%"></div>
+                    <div class="score-bar-marker" id="score-bar-marker" style="display: none"></div>
+                </div>
+                <div class="score-bar-legend">
+                    <span>0% - Début du parcours</span>
+                    <span>100% - Bien-être optimal</span>
+                </div>
+            </div>
+            
+            <div class="improvement-margin">
+                <div>Votre potentiel de progression global :</div>
+                <div class="value" id="improvement-value">100%</div>
+                <div>Plus le pourcentage est haut, plus vous avez d'opportunités d'amélioration</div>
+            </div>
+        </div>
+        
+        <div class="score-grid" id="score-container">
+            </div>
+        
+        <div class="score-item total-score">
+            <div class="score-label">NIVEAU GLOBAL DE BIEN-ÊTRE</div>
+            <div class="score-value" id="score-total">0%</div>
+            <div class="score-percentage" id="global-level-message"></div>
+        </div>
+        
+        <div class="improvement-analysis" id="improvement-analysis">
+            </div>
+        
+        <div class="highlight" id="final-highlight">
+            </div>
+    </div>
+
+    <div class="download-section">
+        <button class="download-btn" onclick="downloadPDF()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Télécharger le Questionnaire
+        </button>
+        <p style="font-size: 10px; margin-top: 8px; color: #666;">
+            Téléchargez le PDF et renvoyez-le complété par email
+        </p>
+    </div>
+
+    <script>
+        // Configuration des catégories
+        const categories = [
+            { id: 'A', name: 'Forme & santé', questions: ['q1', 'q2', 'q3', 'q4'], maxScore: 20 },
+            { id: 'B', name: 'Équilibre intérieur', questions: ['q5', 'q6', 'q7'], maxScore: 15 },
+            { id: 'C', name: 'Système digestif', questions: ['q8', 'q9'], maxScore: 10 },
+            { id: 'D', name: 'Immunitaire', questions: ['q10', 'q11', 'q12'], maxScore: 15 },
+            { id: 'E', name: 'Beauté intégrale', questions: ['q13', 'q14', 'q15'], maxScore: 15 },
+            { id: 'F', name: 'Santé osseuse', questions: ['q16', 'q17', 'q18'], maxScore: 15 },
+            // Nouvelle catégorie G conditionnelle
+            { id: 'G', name: 'Pré/Post-ménopause', questions: ['q19', 'q20', 'q21', 'q22'], maxScore: 20, isConditional: true }
+        ];
+
+        // Fonction pour déterminer le niveau
+        function getLevelInfo(percentage) {
+            if (percentage >= 90) {
+                return {
+                    level: 'level-excellent',
+                    message: '🏆 Excellent ! Félicitations',
+                    icon: '🏆'
+                };
+            } else if (percentage >= 60) {
+                return {
+                    level: 'level-good',
+                    message: '📈 Bon ! Belles opportunités d\'évolution',
+                    icon: '📈'
+                };
+            } else if (percentage >= 40) {
+                return {
+                    level: 'level-important',
+                    message: '💪 Votre potentiel de progression est important !',
+                    icon: '💪'
+                };
+            } else {
+                return {
+                    level: 'level-exceptional',
+                    message: '🚀 Votre potentiel de progression est exceptionnel !',
+                    icon: '🚀'
+                };
+            }
+        }
+
+        // SOLUTION 1 : NETTOYAGE AU CHARGEMENT - Garantir un formulaire vierge
+        function clearAllData() {
+            // Vider le localStorage
+            localStorage.removeItem('wellnessQuestionnaire');
+            
+            // Réinitialiser tous les champs du formulaire
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea').forEach(input => {
+                input.value = '';
+            });
+            
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            // Cacher tous les champs "autre"
+            document.querySelectorAll('.other-input-fullwidth').forEach(input => {
+                input.classList.remove('visible');
+                input.value = '';
+            });
+
+            // Cacher la section ménopause par défaut
+            const menopauseSection = document.getElementById('menopause-section');
+            if (menopauseSection) menopauseSection.classList.add('hidden-section');
+            
+            // Réinitialiser les scores
+            updateScores();
+        }
+
+        // Gestion des champs "Autre"
+        function setupOtherInputs() {
+            document.querySelectorAll('input[type="radio"][value="other"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const container = this.closest('.other-option-container');
+                    const otherInput = container.querySelector('.other-input-fullwidth');
+                    if (otherInput) {
+                        if (this.checked) {
+                            otherInput.classList.add('visible');
+                            otherInput.focus();
+                        } else {
+                            otherInput.classList.remove('visible');
+                            otherInput.value = '';
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('input[type="checkbox"][value="other"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const container = this.closest('.other-option-container');
+                    const otherInput = container.querySelector('.other-input-fullwidth');
+                    if (otherInput) {
+                        if (this.checked) {
+                            otherInput.classList.add('visible');
+                            otherInput.focus();
+                        } else {
+                            otherInput.classList.remove('visible');
+                            otherInput.value = '';
+                        }
+                    }
+                });
+            });
+        }
+
+        // LOGIQUE DE VISIBILITÉ DE LA SECTION MENOPAUSE
+        function updateMenopauseSectionVisibility() {
+            const ageInput = document.getElementById('age');
+            const sexInput = document.querySelector('input[name="sex"]:checked');
+            const section = document.getElementById('menopause-section');
+            
+            const age = parseInt(ageInput.value) || 0;
+            const sex = sexInput ? sexInput.value : '';
+            
+            // MODIFICATION : Condition d'âge >= 35
+            if (sex === 'F' && age >= 35) {
+                section.classList.remove('hidden-section');
+            } else {
+                section.classList.add('hidden-section');
+                // Réinitialiser les réponses de cette section si on la cache
+                document.querySelectorAll('#menopause-section input[type="radio"]').forEach(input => {
+                    input.checked = false;
+                });
+            }
+            updateScores(); // Recalculer les scores
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            clearAllData();
+            setupOtherInputs();
+            
+            // Écouteurs pour la mise à jour des scores
+            const allInputs = document.querySelectorAll('input, textarea');
+            allInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    updateScores();
+                });
+            });
+
+            // Écouteurs spécifiques pour la conditionnalité
+            document.getElementById('age').addEventListener('input', updateMenopauseSectionVisibility);
+            document.querySelectorAll('input[name="sex"]').forEach(input => {
+                input.addEventListener('change', updateMenopauseSectionVisibility);
+            });
+            
+            updateScores();
+        });
+
+        function updateScores() {
+            let totalScore = 0;
+            let currentTotalMaxScore = 0; // Max score dynamique selon visibilité
+            const categoryScores = [];
+            
+            // Vérifier si la section G est visible
+            const isMenopauseVisible = !document.getElementById('menopause-section').classList.contains('hidden-section');
+
+            categories.forEach(category => {
+                // Si la catégorie est conditionnelle et que la section est cachée, on l'ignore
+                if (category.isConditional && !isMenopauseVisible) {
+                    return; 
+                }
+
+                const score = calculateCategoryScore(category.questions);
+                const percentage = Math.round((score / category.maxScore) * 100);
+                totalScore += score;
+                currentTotalMaxScore += category.maxScore;
+
+                categoryScores.push({
+                    id: category.id,
+                    name: category.name,
+                    score: score,
+                    maxScore: category.maxScore,
+                    percentage: percentage
+                });
+            });
+            
+            // Tri par pourcentage CROISSANT
+            categoryScores.sort((a, b) => a.percentage - b.percentage);
+            
+            // Calcul du pourcentage total
+            // Éviter la division par zéro
+            const totalPercentage = currentTotalMaxScore > 0 
+                ? Math.round((totalScore / currentTotalMaxScore) * 100) 
+                : 0;
+            
+            updateScoreDisplay(categoryScores, totalPercentage, currentTotalMaxScore, totalScore);
+            updateScoreVisualization(totalPercentage);
+            updateImprovementAnalysis(totalPercentage, categoryScores);
+        }
+
+        function calculateCategoryScore(questionNames) {
+            let score = 0;
+            questionNames.forEach(questionName => {
+                const selectedRadio = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (selectedRadio) score += parseInt(selectedRadio.value);
+            });
+            return score;
+        }
+
+        function updateScoreVisualization(totalPercentage) {
+            const scoreBarFill = document.getElementById('score-bar-fill');
+            const currentScoreValue = document.getElementById('current-score-value');
+            const improvementValue = document.getElementById('improvement-value');
+            
+            scoreBarFill.style.width = totalPercentage + '%';
+            currentScoreValue.textContent = totalPercentage + '%';
+            improvementValue.textContent = (100 - totalPercentage) + '%';
+        }
+
+        function updateScoreDisplay(categoryScores, totalPercentage, maxScore, currentScore) {
+            const container = document.getElementById('score-container');
+            container.innerHTML = '';
+            
+            categoryScores.forEach((category, index) => {
+                const levelInfo = getLevelInfo(category.percentage);
+                const scoreItem = document.createElement('div');
+                scoreItem.className = 'score-item';
+                scoreItem.innerHTML = `
+                    <div class="category-name">${category.name}</div>
+                    <div class="rank-number">${index + 1}</div>
+                    <div class="score-value">${category.score}/${category.maxScore}</div>
+                    <div class="score-percentage ${levelInfo.level}">${category.percentage}%</div>
+                    <div class="level-message ${levelInfo.level}">${levelInfo.icon} ${levelInfo.message}</div>
+                `;
+                container.appendChild(scoreItem);
+            });
+            
+            const globalLevelInfo = getLevelInfo(totalPercentage);
+            // Afficher le score sur le max dynamique (90 ou 110)
+            document.getElementById('score-total').textContent = `${totalPercentage}% (${currentScore}/${maxScore})`;
+            document.getElementById('global-level-message').textContent = globalLevelInfo.message;
+            document.getElementById('global-level-message').className = 'score-percentage ' + globalLevelInfo.level;
+        }
+
+        function updateImprovementAnalysis(totalPercentage, categoryScores) {
+            const analysisContainer = document.getElementById('improvement-analysis');
+            const highlightContainer = document.getElementById('final-highlight');
+            const improvementMargin = 100 - totalPercentage;
+            
+            let analysisText = '';
+            
+            // On prend les 2 pires catégories (qui sont au début du tableau car trié ascendant)
+            const topOpportunities = categoryScores.slice(0, 2).map(cat => `<strong>${cat.name}</strong>`).join(' et ');
+
+            if (totalPercentage >= 70) {
+                analysisText = `
+                    <h4>Analyse de vos résultats</h4>
+                    <div class="improvement-text">
+                        <strong>Votre niveau de bien-être est excellent !</strong> 
+                        Avec un score de ${totalPercentage}%, vous avez atteint un équilibre remarquable. 
+                        Les domaines ${topOpportunities} 
+                        représentent vos plus belles opportunités d'évolution.
+                    </div>
+                `;
+            } else if (totalPercentage >= 40) {
+                analysisText = `
+                    <h4>Analyse de vos résultats</h4>
+                    <div class="improvement-text">
+                        <strong>Vous avez une base solide avec de belles perspectives d'évolution.</strong> 
+                        Votre score de ${totalPercentage}% montre un bon équilibre général. 
+                        Les domaines ${topOpportunities} 
+                        offrent les plus belles opportunités.
+                    </div>
+                `;
+            } else {
+                analysisText = `
+                    <h4>Analyse de vos résultats</h4>
+                    <div class="improvement-text">
+                        <strong>Votre parcours bien-être commence ici avec un potentiel exceptionnel !</strong> 
+                        Votre score de ${totalPercentage}% révèle des opportunités majeures d'amélioration. 
+                        Les domaines ${topOpportunities} 
+                        sont vos meilleurs leviers.
+                    </div>
+                `;
+            }
+            
+            const highlightText = `
+                <strong>Votre potentiel de progression : ${improvementMargin}%</strong><br>
+                Chaque point représente une opportunité concrète d'amélioration. 
+                Notre expertise vous accompagne pour transformer ce potentiel en résultats tangibles. 
+                <strong>Votre parcours bien-être commence maintenant !</strong>
+            `;
+            
+            analysisContainer.innerHTML = analysisText;
+            highlightContainer.innerHTML = highlightText;
+        }
+
+        function prepareForPrint() {
+            document.querySelectorAll('textarea, input[type="text"]').forEach(element => {
+                element.setAttribute('data-original-placeholder', element.placeholder);
+                element.placeholder = ''; 
+            });
+        }
+
+        function restoreAfterPrint() {
+            document.querySelectorAll('textarea, input[type="text"]').forEach(element => {
+                const original = element.getAttribute('data-original-placeholder');
+                if (original) {
+                    element.placeholder = original;
+                }
+            });
+        }
+
+        function downloadPDF() {
+            prepareForPrint();
+            window.print();
+            setTimeout(restoreAfterPrint, 1000);
+        }
+
+        window.addEventListener('beforeprint', prepareForPrint);
+        window.addEventListener('afterprint', restoreAfterPrint);
+    </script>
+</body>
+</html>
