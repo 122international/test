@@ -559,16 +559,16 @@
             display: none;
         }
 
-        /* --- STYLES POUR L'IMPRESSION PDF CORRIGÉS (INTEGRATION FIX) --- */
+        /* --- STYLES POUR L'IMPRESSION PDF CORRIGÉS (INTEGRATION FIX MOBILE) --- */
         @media print {
             body {
                 padding: 8px;
                 background: white;
+                -webkit-print-color-adjust: exact !important; /* Force les couleurs de fond */
+                print-color-adjust: exact !important;
             }
             .header {
                 background: #2c3e50 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
             .section {
                 border: 1px solid #ccc;
@@ -576,46 +576,33 @@
             }
             .results-section {
                 background-color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
             .download-section {
                 display: none;
             }
             .improvement-analysis {
                 background-color: #f0f8ff !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
             .highlight {
                 background-color: #fffacd !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
             .notes-section {
                 background-color: #f9f9f9 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
             .score-bar-fill {
                 background: #2c3e50 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
+            
+            /* --- FORCE L'AFFICHAGE DE LA GRILLE DESKTOP MÊME SUR MOBILE --- */
+            /* C'est le point clé pour que Q1-22 apparaissent sur mobile/tablette */
             .mobile-question {
                 display: none !important;
             }
+            
             .compact-grid {
                 display: grid !important;
-            }
-            .other-input-fullwidth {
-                background-color: #f8f9fa !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            body::before {
-                opacity: 0.03;
-                background-size: 50%;
+                border: 1px solid #eee;
+                width: 100% !important;
             }
             
             /* Masquer la section ménopause à l'impression si elle est cachée */
@@ -635,11 +622,6 @@
             input {
                 color: #000 !important;
                 background-color: white !important;
-            }
-            
-            /* S'assurer que tout est visible */
-            .compact-grid {
-                border: 1px solid #eee;
             }
             
             .compact-question {
@@ -667,66 +649,60 @@
                 break-inside: avoid !important;
             }
 
-            .radio-option-horizontal label,
-            .checkbox-option label {
-                display: inline-block !important;
-                margin-left: 4px !important;
-                margin-bottom: 0 !important;
-                vertical-align: middle !important;
-            }
-
-            /* --- CORRECTION CRITIQUE AFFICHAGE CASES À COCHER (TYPE INDEX JUSTE) --- */
+            /* --- CORRECTION CRITIQUE AFFICHAGE CASES À COCHER (COMPATIBLE MOBILE) --- */
             /* Force l'apparence personnalisée pour s'afficher sur PDF sans background graphics */
             
             .compact-option input[type="radio"],
             .mobile-option input[type="radio"],
             .radio-option-horizontal input[type="radio"],
             .checkbox-option input[type="checkbox"] {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 14px;
-                height: 14px;
-                border: 1px solid #999 !important;
-                border-radius: 2px;
-                display: inline-block;
-                position: relative;
-                background: white;
+                -webkit-appearance: none !important;
+                appearance: none !important;
+                width: 14px !important;
+                height: 14px !important;
+                border: 1px solid #333 !important; /* Bordure foncée explicite pour impression */
+                border-radius: 2px !important;
+                display: inline-block !important;
+                position: relative !important;
+                background: white !important;
                 margin: 0 4px 0 0 !important;
                 box-shadow: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
             }
 
             /* Style des éléments COCHÉS avec le checkmark (✓) via CSS content */
-            /* Cela contourne le problème des arrière-plans non imprimés */
             .compact-option input[type="radio"]:checked,
             .mobile-option input[type="radio"]:checked,
             .radio-option-horizontal input[type="radio"]:checked,
             .checkbox-option input[type="checkbox"]:checked {
-                background-color: white; 
-                border-color: #2c3e50 !important;
+                background-color: white !important; 
+                border-color: #000 !important;
             }
             
             .compact-option input[type="radio"]:checked::after,
             .mobile-option input[type="radio"]:checked::after,
             .radio-option-horizontal input[type="radio"]:checked::after,
             .checkbox-option input[type="checkbox"]:checked::after {
-                content: "✓"; 
-                display: block;
-                text-align: center;
-                font-weight: bold;
-                color: #2c3e50;
-                font-size: 16px; 
-                line-height: 12px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 100%;
-                height: 100%;
+                content: "✓" !important; 
+                display: block !important;
+                text-align: center !important;
+                font-weight: bold !important;
+                color: #000 !important;
+                font-size: 16px !important; 
+                line-height: 12px !important;
+                position: absolute !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 99 !important;
             }
         }
 
-        /* Responsive MOBILE */
-        @media (max-width: 768px) {
+        /* Responsive MOBILE - ECRAN UNIQUEMENT */
+        @media screen and (max-width: 768px) {
             body {
                 padding: 12px;
                 font-size: 14px;
@@ -922,7 +898,7 @@
         }
         
         /* Tablet */
-        @media (min-width: 769px) and (max-width: 1024px) {
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
             body {
                 padding: 15px;
             }
@@ -937,7 +913,7 @@
         }
         
         /* Desktop */
-        @media (min-width: 1025px) {
+        @media screen and (min-width: 1025px) {
             .mobile-question {
                 display: none;
             }
@@ -2359,7 +2335,47 @@
             });
             
             updateScores();
+            
+            // Correction sync Mobile/Desktop
+            setupRadioSync();
         });
+
+        // Sync Mobile/Desktop pour garantir que l'impression est correcte
+        function setupRadioSync() {
+            // Quand on clique sur Mobile, on coche aussi le Desktop (qui est celui imprimé)
+            document.querySelectorAll('.mobile-option input[type="radio"]').forEach(mobileRadio => {
+                mobileRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Trouver le radio correspondant dans la vue compacte
+                        // Ils ont le même nom et la même valeur
+                        const name = this.name;
+                        const val = this.value;
+                        const desktopRadio = document.querySelector(`.compact-option input[name="${name}"][value="${val}"]`);
+                        
+                        if (desktopRadio) {
+                            desktopRadio.checked = true;
+                            updateScores(); 
+                        }
+                    }
+                });
+            });
+            
+            // Et inversement (si redimensionnement fenêtre)
+            document.querySelectorAll('.compact-option input[type="radio"]').forEach(desktopRadio => {
+                desktopRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                         const name = this.name;
+                        const val = this.value;
+                        const mobileRadio = document.querySelector(`.mobile-option input[name="${name}"][value="${val}"]`);
+                        
+                        if (mobileRadio) {
+                            mobileRadio.checked = true;
+                            updateScores();
+                        }
+                    }
+                });
+            });
+        }
 
         function updateScores() {
             let totalScore = 0;
